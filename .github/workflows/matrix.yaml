@@ -4,7 +4,7 @@
 
 name: Matrix Build
 
-# Trigger this workflow whenever new code is pushed to the "main" branch or a pull request is made on the "main" branch
+# Trigger this workflow whenever a pull request is made on the "main" branch or when workflow is invoked manually
 on:
   pull_request:
     branches: [ "main" ]
@@ -23,16 +23,13 @@ jobs:
         java: [17, 19]
         distro: [temurin, adopt]
         include: 
-          - java: 21  # Java 21 is not supported by Maven yet, so we set the experimental flag to true
+          - java: 21
             experimental: true
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental == true }}
-    env: 
-      JDK_VERSION: ${{ matrix.java }}
-
+    # The steps that the job will execute
     # Steps represent a sequence of tasks that will be executed as part of the job - they cannot run in parallel.
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."    
       
