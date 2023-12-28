@@ -2,12 +2,10 @@
 # For more information see: https://ncorti.com/blog/howto-github-actions-build-matrix
 # and YouTube Video Tutorial [Devnexus 2023 - A Call to (GitHub) Actions! - Justin Lee]: https://www.youtube.com/watch?v=YUuk0kt_0LE 
 
-name: CI using Matrix
+name: Matrix Build
 
 # Trigger this workflow whenever new code is pushed to the "main" branch or a pull request is made on the "main" branch
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch: 
@@ -22,10 +20,15 @@ jobs:
       # we define a build matrix that allows us to test across two operating systems and two different versions of Java 
       matrix:
         os: [ubuntu-latest, macos-latest]
-        jdk: [17, 21]
+        java: [17, 19]
+        distro: [temurin, adopt]
+        include: 
+          - java: 21  # Java 21 is not supported by Maven yet, so we set the experimental flag to true
+            experimental: true
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental == 'true' }}
     env: 
-      JDK_VERSION: ${{ matrix.jdk }}
+      JDK_VERSION: ${{ matrix.java }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job - they cannot run in parallel.
     steps:
@@ -49,9 +52,9 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: ${{ matrix.jdk }}
-          distribution: 'temurin'
-          cache: maven
+          java-version: ${{ matrix.java }}
+          distribution: ${{ matrix.distro }}
+          cache: 'maven'
           server-id: central
       
       # Compile the Java code using Maven 
