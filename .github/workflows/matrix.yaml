@@ -26,7 +26,7 @@ jobs:
           - java: 21  # Java 21 is not supported by Maven yet, so we set the experimental flag to true
             experimental: true
     runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.experimental == 'true' }}
+    continue-on-error: ${{ matrix.experimental == true }}
     env: 
       JDK_VERSION: ${{ matrix.java }}
 
