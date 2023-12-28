@@ -39,14 +39,6 @@ jobs:
       - name: Checkout repository code
         uses: actions/checkout@v4
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner 🖥️"
-  
-      # Runs a set of commands using the runners shell
-      - name: Print Java & Maven Version
-        run: |
-          echo
-          java -version
-          echo
-          mvn --version
 
       # Setup Java so that repository code can be compiled 
       - name: Setup Java
@@ -56,6 +48,14 @@ jobs:
           distribution: ${{ matrix.distro }}
           cache: 'maven'
           server-id: central
+  
+      # Run a set of commands using the runners shell
+      - name: Print Java & Maven Version
+        run: |
+          echo
+          java -version
+          echo
+          mvn --version
       
       # Compile the Java code using Maven 
       - name: Build with Maven
