@@ -16,17 +16,12 @@ jobs:
     # The type of runner that the job will run on. Runner is a machine that can connect to GitHub, run the steps
     # and log the results back to GitHub
     strategy: 
-      fail-fast: false
       # we define a build matrix that allows us to test across two operating systems and two different versions of Java 
       matrix:
         os: [ubuntu-latest, macos-latest]
         java: [17, 19]
         distro: [temurin, adopt]
-        include: 
-          - java: 21
-            experimental: true
     runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.experimental == true }}
     # The steps that the job will execute
     # Steps represent a sequence of tasks that will be executed as part of the job - they cannot run in parallel.
     steps:
