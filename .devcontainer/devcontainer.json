@@ -15,7 +15,9 @@
       "vscjava.vscode-java-pack",
       "Pivotal.vscode-boot-dev-pack",
       "github.vscode-github-actions",
-      "GitHub.copilot"
+      "GitHub.copilot",
+      "redhat.vscode-yaml",
+      "alefragnani.Bookmarks"
    ],
 
   "customizations": {
