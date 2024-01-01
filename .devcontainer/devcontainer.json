@@ -8,6 +8,7 @@
 			"installGradle": "false"
 		},
     "aws-cli": "latest",
+    "ghcr.io/mpriscella/features/kind:1": {},
 		"ghcr.io/stuartleeks/dev-container-features/shell-history:0": {}
   },
   
